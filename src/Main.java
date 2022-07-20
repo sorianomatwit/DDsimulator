@@ -23,7 +23,7 @@ public class Main {
 		Ability DamageEHHF3 = new DmgAbility(
 				sim,TeamAffected.Enemy, TargetPosition.HighestHealth, AbilityTrigger.PostFaint,1,3);
 		Ability DamageEHAM2 = new DmgAbility(
-				sim, TeamAffected.Enemy, TargetPosition.HighestAttack, AbilityTrigger.PreMatch,2,1);
+				sim, TeamAffected.Enemy, TargetPosition.HighestAttack, AbilityTrigger.PreMatch,1,2);
 		Ability DamageELHM1 = new DmgAbility(
 				sim, TeamAffected.Enemy, TargetPosition.LowestHealth,AbilityTrigger.PreMatch,1,1);
 		Ability DamageERD1T2 = new DmgAbility(
@@ -35,29 +35,30 @@ public class Main {
 		System.out.println("created all abilities");
 		
 		ArrayList<Demigod> allBabies = new ArrayList<>();
-		allBabies.add(new Demigod("Aphrodite",1,1,BuffPSA21));
-		allBabies.add(new Demigod("Apollo",2,5,DamageELHM1));
-		allBabies.add(new Demigod("Ares",5,2,DamageEBLM1));
-		allBabies.add(new Demigod("Artemis",3,2,BuffPBF02T2));
-		allBabies.add(new Demigod("Athena",3,3,DamageELHM1));
-		allBabies.add(new Demigod("Demeter",2,3,BuffPRF11T3));
-		allBabies.add(new Demigod("Dionysus",3,2,DamageEBLM1));
-		allBabies.add(new Demigod("Hades",2,1,SummonCerberus));
-		allBabies.add(new Demigod("Hephaestus",2,4,BuffPBLM_13));
-		allBabies.add(new Demigod("Hera",2,1,DamageEHAM2));
-		allBabies.add(new Demigod("Hemes",3,1,DamageERM1));
-		allBabies.add(new Demigod("Poseidon",1,2,BuffPBA11));
-		allBabies.add(new Demigod("Zeus",2,2,DamageERD1T2));
+		allBabies.add(new Demigod("Aphrodite",1,1,BuffPSA21));//0
+		allBabies.add(new Demigod("Apollo",2,5,DamageELHM1));//1
+		allBabies.add(new Demigod("Ares",5,2,DamageEBLM1));//2
+		allBabies.add(new Demigod("Artemis",3,2,BuffPBF02T2));//3
+		allBabies.add(new Demigod("Athena",3,3,SummonMedusa));//4
+		allBabies.add(new Demigod("Demeter",2,3,BuffPRF11T3));//5
+		allBabies.add(new Demigod("Dionysus",3,2,DamageEHHF3));//6
+		allBabies.add(new Demigod("Hades",2,1,SummonCerberus));//7
+		allBabies.add(new Demigod("Hephaestus",2,4,BuffPBLM_13));//8
+		allBabies.add(new Demigod("Hera",2,1,DamageEHAM2));//9
+		allBabies.add(new Demigod("Hemes",3,1,DamageERM1));//10
+		allBabies.add(new Demigod("Poseidon",1,2,BuffPBA11));//11
+		allBabies.add(new Demigod("Zeus",2,2,DamageERD1T2));//12
 		System.out.println("created all babies");
 		//generate teams
 		sim.allBabies.addAll(allBabies);
-		sim.EallBabies.add(allBabies.get(0));
-		sim.EallBabies.add(allBabies.get(2));
+		sim.EallBabies.add(allBabies.get(6));
+		sim.EallBabies.add(allBabies.get(8));
+		sim.EallBabies.add(allBabies.get(9));
 		//sim.scalePlayerby(300);
 		System.out.println("added all babies");
 		System.out.println("start simulation");
 		int numOfSims = 1;
-		for(int i = 0; i < numOfSims;i++) System.out.println(sim.simulate(1000));
+		for(int i = 0; i < numOfSims;i++) System.out.println(sim.simulate(10));
 	}
 
 }

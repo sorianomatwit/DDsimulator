@@ -17,8 +17,9 @@ public class BuffAbility extends Ability{
 	@Override
 	protected void Act(Demigod demigod) {
 		// TODO Auto-generated method stub
-		demigod.atk += addDmg;
-		demigod.hp += addHp;
+		if(demigod.atk + addDmg >= 1) demigod.atk += addDmg;
+		
+		if(demigod.hp + addHp >= 1) demigod.hp += addHp;
 		//System.out.printf("buffed %s for %d/%d%n",demigod.getName(),addDmg,addHp);
 	}
 

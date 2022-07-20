@@ -88,6 +88,8 @@ public abstract class Ability {
 			Demigod HighestDmg = curTeam.get(0);
 			if (curTeam.size() > 0) {
 				for (Demigod demigod : curTeam) {
+//					if (!demigod.isDead && (HighestDmg.isDead || HighestDmg.atk < demigod.atk))
+//						HighestDmg = demigod;
 					if (HighestDmg.atk < demigod.atk && !demigod.isDead && !HighestDmg.isDead) {
 						HighestDmg = demigod;
 					} else if (HighestDmg.isDead) {
@@ -95,6 +97,7 @@ public abstract class Ability {
 						while (i < curTeam.size() && curTeam.get(i).isDead) {
 							HighestDmg = curTeam.get(i);
 							i++;
+							if(!HighestDmg.isDead) break;
 						}
 					}
 				}
@@ -158,7 +161,7 @@ public abstract class Ability {
 
 	public void Perform(Demigod baby, ArrayList<Demigod> myTeam, ArrayList<Demigod> enemyTeam) {
 		ArrayList<Demigod> targetBabies = GetTargets(baby, myTeam, enemyTeam);
-
+		
 		for (Demigod demigod : targetBabies) {
 			Act(demigod);
 		}

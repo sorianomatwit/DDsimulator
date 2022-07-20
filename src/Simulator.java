@@ -102,7 +102,7 @@ public class Simulator {
 		// TODO Auto-generated method stub
 		ArrayList<Demigod> myTeam = team1.contains(demigod) ? team1 : team2;
 		ArrayList<Demigod> enemyteam = team1.contains(demigod) ? team2 : team1;
-
+		System.out.println(enemyteam);
 		demigod.getAbility().Perform(demigod, myTeam, enemyteam);
 	}
 
@@ -118,6 +118,7 @@ public class Simulator {
 	}
 
 	public void TakeDamage(Demigod demigod, int damageAmount) {
+		
 		demigod.hp -= damageAmount;
 		if (demigod.hp <= 0) {
 			demigod.died();
@@ -140,6 +141,7 @@ public class Simulator {
 				}
 			}
 		}
+		System.out.println(demigod + " " + demigod.isDead);
 	}
 
 	public void scalePlayerby(int a) {
@@ -187,7 +189,7 @@ public class Simulator {
 
 		for (int i = 0; i < rounds; i++) {
 			// System.out.println(i);
-			generateTeam(0);
+			generateTeam(2);
 			ArrayList<Demigod> copy1 = new ArrayList<>();
 			copy1.addAll(team1);
 			System.out.println("running...");
@@ -200,6 +202,7 @@ public class Simulator {
 				//System.out.println("running...");
 				
 				fight(team1.get(0), team2.get(0));
+
 				clean(team1);
 				clean(team2);
 			}
