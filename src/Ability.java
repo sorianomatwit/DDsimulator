@@ -63,6 +63,32 @@ public abstract class Ability {
 				}
 			}
 			break;
+		case Summon:
+            for(Demigod unit: curTeam)
+            {
+                if (unit.isSummon && !unit.isDead)
+                {
+                    targetBabies.add(unit);
+                }
+            }
+            break;
+		case Adjancent:
+            Demigod right = null, left = null;
+            Main.reverseArray(0, myTeam.size(), curTeam);
+            int unitPos = curTeam.indexOf(baby);
+            for (int i = unitPos - 1; i >= 0; i--)
+                if (!curTeam.get(i).isDead) {
+                    left = curTeam.get(i);
+                    break;
+                }
+            for (int i = unitPos + 1; i < curTeam.size(); i++)
+                if (!curTeam.get(i).isDead) {
+                    right = curTeam.get(i);
+                    break;
+                }
+            if (right != null) targetBabies.add(right);
+            if (left != null) targetBabies.add(left);
+            break;
 		case BackOfLineup: // back of the line of either team you call (not for Everthing)
 			if (curTeam.size() > 0) {
 				for (int i = curTeam.size() - 1; i > 0; i--) {
@@ -101,7 +127,7 @@ public abstract class Ability {
 						}
 					}
 				}
-				targetBabies.add(HighestDmg);
+				if(!HighestDmg.isDead) targetBabies.add(HighestDmg);
 			}
 			break;
 		case HighestHealth: // highest hp for team selected
@@ -118,7 +144,7 @@ public abstract class Ability {
 						}
 					}
 				}
-				targetBabies.add(HighestHp);
+				if(!HighestHp.isDead) targetBabies.add(HighestHp);
 			}
 			break;
 		case LowestAttack: // lowest attack for team select
@@ -135,7 +161,7 @@ public abstract class Ability {
 						}
 					}
 				}
-				targetBabies.add(LowestDmg);
+				if(!LowestDmg.isDead) targetBabies.add(LowestDmg);
 			}
 			break;
 		case LowestHealth:// lowest hp for team select
@@ -152,7 +178,7 @@ public abstract class Ability {
 						}
 					}
 				}
-				targetBabies.add(LowestHp);
+				if(!LowestHp.isDead) targetBabies.add(LowestHp);
 			}
 			break;
 		}

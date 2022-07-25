@@ -5,5 +5,6 @@ public enum AbilityTrigger
     PreAttack,
     OnDamaged,
     PostFaint,
-    PreMatch
+    PreMatch,
+    OnSummon
 }

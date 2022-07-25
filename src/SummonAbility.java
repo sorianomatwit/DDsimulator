@@ -2,10 +2,10 @@ import java.util.ArrayList;
 
 import AbilityEnums.*;
 
-public class SummonAblility extends Ability{
+public class SummonAbility extends Ability{
 	
 	private Demigod mySummon;
-	public SummonAblility(Simulator sim, Demigod theSummon) {
+	public SummonAbility(Simulator sim, Demigod theSummon) {
 		this.mySummon = theSummon;
 		this.priority = 1;
 		this.sim = sim;

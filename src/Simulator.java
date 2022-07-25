@@ -8,31 +8,52 @@ public class Simulator {
 	public ArrayList<Demigod> team2 = new ArrayList<>();
 	public ArrayList<Demigod> allBabies = new ArrayList<>();
 	public ArrayList<Demigod> EallBabies = new ArrayList<>();
-	
+	public Team theteam;
 	public boolean isBeingScaled = true;
-
-	public void generateTeam(int a) {
+	
+	public void generateTeam(Team a) {
+		team1.addAll(a.myTeam);
+		
+		for (int i = 0; i < team1.size(); i++) {
+			team2.add(new Demigod(allBabies.get(Calc.RandomRange(0, allBabies.size()))));
+		}
+	}
+	public void generateTeam(int a, int cnt) {
 		team1.clear();
 		team2.clear();
 		switch(a) {
-			default:
-				for (int i = 0; i < 5; i++) {
+			default://both use all
+				for (int i = 0; i < cnt; i++) {
 					team1.add(new Demigod(allBabies.get(Calc.RandomRange(0, allBabies.size()))));
 					team2.add(new Demigod(allBabies.get(Calc.RandomRange(0, allBabies.size()))));
 				}
 			break;
-			case 1:
-				for (int i = 0; i < 5; i++) {
+			case 1://team 1 - all team 2 enemy
+				for (int i = 0; i < cnt; i++) {
 					team1.add(new Demigod(allBabies.get(Calc.RandomRange(0, allBabies.size()))));
 				}
-				for (int i = 0; i < 5; i++) {
+				for (int i = 0; i < cnt; i++) {
 					team2.add(new Demigod(EallBabies.get(Calc.RandomRange(0, EallBabies.size()))));
 				}
 			break;
-			case 2:
-				for (int i = 0; i < 5; i++) {
+			case 2://both enemy
+				for (int i = 0; i < cnt; i++) {
 					team1.add(new Demigod(EallBabies.get(Calc.RandomRange(0, EallBabies.size()))));
 					team2.add(new Demigod(EallBabies.get(Calc.RandomRange(0, EallBabies.size()))));
+				}
+				break;
+			case 3://team 1 enemy team 2 all
+				for (int i = 0; i < cnt; i++) {
+					team1.add(new Demigod(EallBabies.get(Calc.RandomRange(0, EallBabies.size()))));
+				}
+				for (int i = 0; i < cnt; i++) {
+					team2.add(new Demigod(allBabies.get(Calc.RandomRange(0, allBabies.size()))));
+				}
+				break;
+			case 4://team 1 enemy team 2 all
+				team1.addAll(EallBabies);
+				for (int i = 0; i < cnt; i++) {
+					team2.add(new Demigod(allBabies.get(Calc.RandomRange(0, allBabies.size()))));
 				}
 				break;
 			
@@ -102,8 +123,23 @@ public class Simulator {
 		// TODO Auto-generated method stub
 		ArrayList<Demigod> myTeam = team1.contains(demigod) ? team1 : team2;
 		ArrayList<Demigod> enemyteam = team1.contains(demigod) ? team2 : team1;
-		System.out.println(enemyteam);
+		//System.out.println(enemyteam);
 		demigod.getAbility().Perform(demigod, myTeam, enemyteam);
+		if(demigod.getAbility() instanceof SummonAbility) {
+			if(team1.contains(demigod)) {
+				for(Demigod unit: team1) {
+					if(unit.getAbility().trigger == AbilityTrigger.OnSummon) {
+						unit.getAbility().Perform(demigod, myTeam, enemyteam);
+					}
+				}
+			} else {
+				for(Demigod unit: team2) {
+					if(unit.getAbility().trigger == AbilityTrigger.OnSummon) {
+						unit.getAbility().Perform(demigod, myTeam, enemyteam);
+					}
+				}
+			}
+		}
 	}
 
 	public void aRound() {
@@ -114,9 +150,15 @@ public class Simulator {
 					break;
 				}
 			}
+			for (Demigod baby : EallBabies) {
+				if (baby.equals(demigod)) {
+					if(!allBabies.contains(demigod)) demigod.gamePlayed();
+					break;
+				}
+			}
 		}
 	}
-
+	
 	public void TakeDamage(Demigod demigod, int damageAmount) {
 		
 		demigod.hp -= damageAmount;
@@ -124,6 +166,12 @@ public class Simulator {
 			demigod.died();
 			for (Demigod baby : allBabies) {
 				if (team1.contains(demigod) && baby.equals(demigod)) {
+					baby.deathCount++;
+					break;
+				}
+			}
+			for (Demigod baby : EallBabies) {
+				if (!allBabies.contains(baby) && team1.contains(demigod) && baby.equals(demigod)) {
 					baby.deathCount++;
 					break;
 				}
@@ -141,7 +189,7 @@ public class Simulator {
 				}
 			}
 		}
-		System.out.println(demigod + " " + demigod.isDead);
+		//System.out.println(demigod + " " + demigod.isDead);
 	}
 
 	public void scalePlayerby(int a) {
@@ -155,6 +203,7 @@ public class Simulator {
 	}
 
 	public void printTeamStats(ArrayList<Demigod> team) {
+		if(theteam != null)System.out.println(theteam); 
 		String s = "BABY STATS%n";
 		for (Demigod demigod : team) {
 			s += demigod.stats() + "%n";
@@ -183,16 +232,65 @@ public class Simulator {
 			}
 		}
 	}
+	
+	///NOT YET IMPLEMENTED DO NOT USE!!
+	public String simulate(int rounds, Team team) {
+		theteam = team;
+		String s = "";
 
-	public String simulate(int rounds) {
+		for (int i = 0; i < rounds; i++) {
+			 System.out.println(i);
+			generateTeam(team);
+			ArrayList<Demigod> copy1 = new ArrayList<>();
+			copy1.addAll(team1);
+			//System.out.println("running...");
+			aRound();
+			theteam.amtofGames++;
+			//System.out.printf("%s vs %s%n", team1, team2);
+			preMatchabils();
+			clean(team1);
+			clean(team2);
+			while (!team1.isEmpty() && !team2.isEmpty()) {
+				//System.out.println("running...");
+				
+				fight(team1.get(0), team2.get(0));
+
+				clean(team1);
+				clean(team2);
+			}
+			if (team1.isEmpty() && !team2.isEmpty()) {
+				this.teamLost(copy1);
+				theteam.lose++;
+				// System.out.println("lost");
+			} else if (!team1.isEmpty() && team2.isEmpty()) {
+				this.teamWon(copy1);
+				theteam.wins++;
+				// System.out.println("win");
+			} // else System.out.println("draw");
+				// consildateData();
+		}
+		printTeamStats(allBabies);
+
+		// s += String.format("For %d stats %s", rounds, allBabies);
+		return s;
+	}
+	
+	/**]
+	 * 
+	 * @param rounds - int amount of matches you would like to run
+	 * @param generator - change where they pick the team form
+	 * @param teamsize - how large do you want the team sizes to be max should be 5
+	 * @return - a string of the result of battle only record the player team not the enemy team into allBabies
+	 */
+	public String simulate(int rounds, int generator, int teamsize) {
 		String s = "";
 
 		for (int i = 0; i < rounds; i++) {
 			// System.out.println(i);
-			generateTeam(2);
+			generateTeam(generator, teamsize);
 			ArrayList<Demigod> copy1 = new ArrayList<>();
 			copy1.addAll(team1);
-			System.out.println("running...");
+			//System.out.println("running...");
 			aRound();
 			//System.out.printf("%s vs %s%n", team1, team2);
 			preMatchabils();

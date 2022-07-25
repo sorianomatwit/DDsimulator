@@ -9,7 +9,8 @@ public class Demigod {
 	public double lose;
 	public int amtGames;
 	public boolean isDead = false;
-	public int deathCount;
+	public double deathCount;
+	public boolean isSummon = false;
 	public Demigod(String name, int atk, int hp, Ability ability) {
 		this.name = name;
 		this.atk = atk;
@@ -20,12 +21,16 @@ public class Demigod {
 		this.name = name;
 		this.atk = atk;
 		this.hp = hp;
+		isSummon = true;
 	}
+	
 	public Demigod(Demigod other) {
 		this.name = other.name;
 		this.atk = other.atk;
 		this.hp = other.hp;
-		this.ability = other.ability;
+		if(other.ability != null) {
+			this.ability = other.ability;
+		} else isSummon = true;
 	}
 
 	public Ability getAbility() {
@@ -61,8 +66,24 @@ public class Demigod {
 	}
 	public String stats() {
 		double draws = (amtGames - wins - lose);
-		return String.format("%s: WR:%.4f | LR:%.4f | DR:%.4f | G:%d | W:%.0f | L:%.0f | D:%d | DC:%d | ",
-				name.substring(0, 3), wins/amtGames, lose/amtGames, draws/amtGames, amtGames,wins,lose,(int) (draws),deathCount);
+		return String.format("%s: WR:%.4f | LR:%.4f | DR:%.4f | DeathR:%.4f",
+				name.substring(0, 3), wins/amtGames, lose/amtGames, draws/amtGames, deathCount/amtGames);
+	}
+	public double getWinRate() {
+		return wins/amtGames;
+	}
+	public double getLoseRate() {
+		return lose/amtGames;
+	}
+	public double getDrawRate() {
+		double draws = (amtGames - wins - lose);
+		return draws/amtGames;
+	}
+	public int amtOfGames() {
+		return amtGames;
+	}
+	public double deathRate() {
+		return deathCount/amtGames;
 	}
 	@Override
 	public String toString() {
