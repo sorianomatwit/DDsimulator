@@ -6,6 +6,9 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.lang.management.ManagementFactory;
 import java.lang.management.RuntimeMXBean;
+import java.sql.Time;
+import java.sql.Timestamp;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -101,7 +104,7 @@ public class Main {
 				AbilityTrigger.PreMatch, 1, 0, 1);
 		Ability BuffPUS11 = new BuffAbility(TeamAffected.Player, TargetPosition.Summon,
 				AbilityTrigger.OnSummon, 1, 1, 1);
-		
+		//secound set
 		Ability DamageAAF2 = new DmgAbility(TeamAffected.Both, TargetPosition.Adjancent,
 				AbilityTrigger.PostFaint, 1, 2);
 		Ability DamageEBLM1 = new DmgAbility(TeamAffected.Enemy, TargetPosition.BackOfLineup,
@@ -126,7 +129,7 @@ public class Main {
 				AbilityTrigger.PreAttack, 1, 1);
 		Ability DamagePBM1 = new DmgAbility(TeamAffected.Player, TargetPosition.Behind,
 				AbilityTrigger.PreMatch, 1, 1);
-
+		//Summon Abils
 		Ability SummonCerberus = new SummonAbility(new Demigod(-1, "Cerberus", 2, 2));
 		Ability SummonMedusa = new SummonAbility(new Demigod(-2, "Medusa", 1, 4));
 		Ability SummonChariot = new SummonAbility(new Demigod(-3, "Chariot", 3, 1));
@@ -147,7 +150,7 @@ public class Main {
 		allBabies.add(new Demigod(10, "Hemes", 3, 1, DamageERM1));// 10
 		allBabies.add(new Demigod(11, "Poseidon", 1, 2, BuffPBA11));// 11
 		allBabies.add(new Demigod(12, "Zeus", 2, 2, DamageERD1T2));// 12
-		
+		//version 2
 		allBabies.add(new Demigod(13, "Aphrodite", 1, 1, DamageERS1T1));// 0
 		allBabies.add(new Demigod(14, "Apollo", 2, 5, SummonChariot));// 1
 		allBabies.add(new Demigod(15, "Ares", 5, 2, BuffEBLD_10));// 2
@@ -161,20 +164,6 @@ public class Main {
 		allBabies.add(new Demigod(23, "Hemes", 3, 1, DamageAAF2));// 10
 		allBabies.add(new Demigod(24, "Poseidon", 1, 2, BuffPLHF20));// 11
 		allBabies.add(new Demigod(25, "Zeus", 2, 2, BuffPRM01T1));// 12
-		// System.out.println("created all babies");
-
-		// ArrayList<Demigod> EallBabies = new ArrayList<>();
-		// int[] enemyTeam = { 5, 8, 1 };
-		// for (int i : enemyTeam) {
-		// 	EallBabies.add(allBabies.get(i));
-		// }
-
-		// assign builders
-		// ATeamBuilder randomAllBabiesBuilder = new RandomTeamBuilder(allBabies);
-		// AllSetsTeamBuilder allBabySets = new AllSetsTeamBuilder(allBabies, 5);
-		// ATeamBuilder randomEnemyAllBabiesBuilder = new RandomTeamBuilder(EallBabies);
-		// ConstantTeamBuilder constantEnemyTeamBuilder = new ConstantTeamBuilder(EallBabies);
-		// AllSetsTeamBuilder enemyBabySets = new AllSetsTeamBuilder(EallBabies, 5);
 
 		// create simulator
 		Simulator sim = new Simulator(allBabies);
@@ -188,52 +177,24 @@ public class Main {
 		for (String arg : args) {
 			System.out.println();
 		}
-
-		if (args.length < 3) {
-			System.out.println("Expected 3 arguments: [number of cores] [number of total sessions] [current session index]");
-			return;
+		int[] params = new int[3];
+//		if (args.length < 3) {
+//			System.out.println("Expected 3 arguments: [number of cores] [number of total sessions] [current session index]");
+//			return;
+//		}
+		System.out.println("Expected 3 arguments: [number of cores] [number of total sessions] [current session index]");
+		Scanner input = new Scanner(System.in);
+		for(int i = 0; i < params.length;i++) {
+			params[i] = input.nextInt();
 		}
-
-		int cores = Integer.parseInt(args[0]);
-		int sessions = Integer.parseInt(args[1]);
-		int sessionIndex = Integer.parseInt(args[2]);
+//		int cores = Integer.parseInt(args[0]);
+//		int sessions = Integer.parseInt(args[1]);
+//		int sessionIndex = Integer.parseInt(args[2]);
+		int cores = params[0];
+		int sessions = params[1];
+		int sessionIndex = params[2];
 		System.out.printf("Beginning Session %d of %d\n", sessionIndex, sessions);
 		BruteForceSession(sessions, sessionIndex, cores, allBabies, 5);
-		
-		/*
-		int numOfSims = 1;
-		for (int i = 0; i < numOfSims; i++) {
-			String print;
-
-			// random team against set enemy
-			// print = sim.simulate(10000, randomAllBabiesBuilder, constantEnemyTeamBuilder, 5);
-
-			// set team against all combinations of enemies
-			// print = sim.simulate(constantEnemyTeamBuilder, allBabySets);
-
-			// try {
-			// 	writeIntoExcel(allBabies, i);
-			// } catch (IOException e) {
-			// 	// TODO Auto-generated catch block
-			// 	e.printStackTrace();
-			// }
-			
-
-			// subset against all combinations
-			Collection<Team> teams = sim.simulate(enemyBabySets, allBabySets);
-
-			try {
-				writeIntoExcel(teams);
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-
-			RuntimeMXBean rb = ManagementFactory.getRuntimeMXBean();
-			long uptime = rb.getUptime();
-			System.out.println(uptime);
-		}
-		*/
 	}
 
 	private static void BruteForce(int jobs, List<Demigod> allBabies, int teamSize) {
@@ -301,6 +262,7 @@ public class Main {
 				return;
 			} else System.out.printf("Overwritting '%s' on completion...\n", outFileName);
 		}
+		System.out.println("Start: "+ LocalTime.now().toString());
 
 		long totalSetCount = AllSetsTeamBuilder.CalculateTotalSets(allBabies.size(), teamSize);
 
@@ -348,7 +310,8 @@ public class Main {
 		
 		RuntimeMXBean rb = ManagementFactory.getRuntimeMXBean();
 		long uptime = rb.getUptime();
-		System.out.println(uptime);
+		System.out.println("Time:" + (new Timestamp(uptime)).toString());
+		System.out.println("EndTIme:"+LocalTime.now());
 
 	}
 

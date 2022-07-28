@@ -219,7 +219,8 @@ public abstract class Ability {
 
 	protected abstract void Act(Simulator sim, Demigod demigod);
 
-	public String GetName() {
+	@Override
+	public String toString() {
 		StringBuilder str = new StringBuilder();
 
 		switch(targetTeam) {

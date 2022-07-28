@@ -105,7 +105,7 @@ public class Demigod {
 	@Override
 	public String toString() {
 		//String s = String.format("%s : W:%.2f L:%.2f",name, wins/amtGames, lose/amtGames);
-		String s = String.format("%s:%s", name.substring(0,4), ability.GetName());
+		String s = String.format("%s:%s", name.substring(0,4), ability);
 		return s;
 	}
 	

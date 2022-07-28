@@ -36,7 +36,7 @@ public class SummonAbility extends Ability{
 	}
 	
 	@Override
-	public String GetName() {
+	public String toString() {
 		return "Summ" + super.toString();
 	}
 
