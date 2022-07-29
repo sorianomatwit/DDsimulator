@@ -422,7 +422,7 @@ public class Main {
 		}
 		System.out.println("Start: " + LocalTime.now().toString());
 
-		long totalSetCount = AllSetsTeamBuilder.CalculateTotalSets(allBabies.size(), teamSize);
+		long totalSetCount = AllSetsTeamBuilder.CalculateTotalSets(Daycare.size(), teamSize);
 
 		long sessionSize = totalSetCount / sessions;
 		long jobSize = sessionSize / jobs;
