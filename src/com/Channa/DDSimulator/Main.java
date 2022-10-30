@@ -216,21 +216,21 @@ public class Main {
 		allBabies.add(new Demigod(25, "Poseidon", 1, 2, BuffPLHF20));// 11
 		allBabies.add(new Demigod(26, "Zeus", 2, 2, BuffPRM01T1));// 12
 		allBabies.add(new Demigod(27, "Hestia", 1, 3, BuffPFLM12));// 13
-		// version 3
-		allBabies.add(new Demigod(28, "Aphrodite", 1, 1, BuffEFLD1_1));// 0
-		allBabies.add(new Demigod(29, "Apollo", 2, 5, BuffAAM01));// 1
-		allBabies.add(new Demigod(30, "Ares", 5, 2, DamageEFLF2));// 2
-		allBabies.add(new Demigod(31, "Artemis", 3, 2, DamageERS1T1));// 3
-		allBabies.add(new Demigod(32, "Athena", 3, 3, SummonArachne));// 4
-		allBabies.add(new Demigod(33, "Demeter", 2, 3, SummonCornucopia));// 5
-		allBabies.add(new Demigod(34, "Dionysus", 3, 2, BuffEHAM_20));// 6
-		allBabies.add(new Demigod(35, "Hades", 3, 2, DamageAAF1));// 7
-		allBabies.add(new Demigod(36, "Hephaestus", 2, 4, BuffELHF_31));// 8
-		allBabies.add(new Demigod(37, "Hera", 2, 1, DamageAAM1));// 9
-		allBabies.add(new Demigod(38, "Hemes", 3, 1, BuffERF_20T1));// 10
-		allBabies.add(new Demigod(39, "Poseidon", 1, 2, DamageESLA1));// 11
-		allBabies.add(new Demigod(40, "Zeus", 2, 2, DamageARF1T4));// 12
-		allBabies.add(new Demigod(41, "Hestia", 1, 3, BuffPBF20));// 13
+//		// version 3
+//		allBabies.add(new Demigod(28, "Aphrodite", 1, 1, BuffEFLD1_1));// 0
+//		allBabies.add(new Demigod(29, "Apollo", 2, 5, BuffAAM01));// 1
+//		allBabies.add(new Demigod(30, "Ares", 5, 2, DamageEFLF2));// 2
+//		allBabies.add(new Demigod(31, "Artemis", 3, 2, DamageERS1T1));// 3
+//		allBabies.add(new Demigod(32, "Athena", 3, 3, SummonArachne));// 4
+//		allBabies.add(new Demigod(33, "Demeter", 2, 3, SummonCornucopia));// 5
+//		allBabies.add(new Demigod(34, "Dionysus", 3, 2, BuffEHAM_20));// 6
+//		allBabies.add(new Demigod(35, "Hades", 3, 2, DamageAAF1));// 7
+//		allBabies.add(new Demigod(36, "Hephaestus", 2, 4, BuffELHF_31));// 8
+//		allBabies.add(new Demigod(37, "Hera", 2, 1, DamageAAM1));// 9
+//		allBabies.add(new Demigod(38, "Hemes", 3, 1, BuffERF_20T1));// 10
+//		allBabies.add(new Demigod(39, "Poseidon", 1, 2, DamageESLA1));// 11
+//		allBabies.add(new Demigod(40, "Zeus", 2, 2, DamageARF1T4));// 12
+//		allBabies.add(new Demigod(41, "Hestia", 1, 3, BuffPBF20));// 13
 
 
 		// sim.scalePlayerby(300);
@@ -244,7 +244,7 @@ public class Main {
 		for (int i : babies) {
 			EallBabies.add(allBabies.get(i));
 			EallBabies.add(allBabies.get(i + 14));
-			EallBabies.add(allBabies.get(i + 28));
+			//EallBabies.add(allBabies.get(i + 28));
 		}
 		// assign builders
 		 ATeamBuilder randomAllBabiesBuilder = new RandomTeamBuilder(allBabies);// randomised all babies
@@ -277,7 +277,7 @@ public class Main {
 		int sessions = params[1];
 		int sessionIndex = params[2];
 		System.out.printf("Beginning Session %d of %d\n", sessionIndex, sessions);
-		BruteForceSession(sessions, sessionIndex, cores, allBabies,EallBabies, 5);
+		BruteForceSession(sessions, sessionIndex, cores, allBabies,EallBabies, 4);
 	}
 
 	private static void BruteForce(int jobs, List<Demigod> allBabies, int teamSize) {
